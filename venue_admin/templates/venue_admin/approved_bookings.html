@@ -15,6 +15,10 @@
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- Vendor CSS Files -->
+<link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+
 <style>
 /* ===== YOUR ENTIRE CSS (UNCHANGED) ===== */
 :root {
@@ -302,5 +306,7 @@ c.textContent=formatTime(c.dataset.time);
 });
 </script>
 
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
 </body>
 </html>

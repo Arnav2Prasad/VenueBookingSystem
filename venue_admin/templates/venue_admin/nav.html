@@ -28,42 +28,45 @@
   /* Navbar layout and visual styles to match provided design */
   :root{ --nav-bg:#36537a; --nav-contrast:#2f4f73; --link-color:#ffffff; --link-muted:rgba(255,255,255,0.85); --btn-bg:#66c8ff; --shadow-md:0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08); }
   /* Ensure page content sits below fixed header and header styling matches approved page */
-  #header{ background:var(--nav-bg); width:100%; top:0; left:0; right:0; z-index:9999; position:fixed; padding:1rem 2rem; box-shadow:var(--shadow-md); }
+  #header{ background:var(--nav-bg); width:100%; top:0; left:0; right:0; z-index:9999; position:fixed; padding:0.75rem 1rem; box-shadow:var(--shadow-md); }
   body{ padding-top:80px; }
   /* 3-column flex: brand | centered links | logout */
-  #header > .container-fluid{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:nowrap; }
-  .brand{ font-family: 'Poppins', sans-serif; color:var(--link-color); font-weight:700; font-size:24px; letter-spacing:2px; text-decoration:none; margin:0; padding:8px 8px; text-transform:uppercase; }
+  #header > .container-fluid{ display:flex; align-items:center; justify-content:space-between; gap:0.75rem; flex-wrap:nowrap; }
+  .brand{ font-family: 'Poppins', sans-serif; color:var(--link-color); font-weight:700; font-size:22px; letter-spacing:1.5px; text-decoration:none; margin:0; padding:6px 6px 6px 2px; text-transform:uppercase; }
   /* Center nav occupies remaining space but does not force wrap */
-  #navmenu{ display:flex; align-items:center; flex:1 1 auto; min-width:0; }
+  #navmenu{ display:flex; align-items:center; flex:1 1 auto; min-width:0; justify-content:flex-start; }
+  #navmenu ul{ margin-left:0.5rem; }
   #navmenu ul{ list-style:none; margin:0; padding:0; display:flex; gap:1.5rem; align-items:center; justify-content:center; width:100%; white-space:nowrap; }
   #navmenu ul li{ margin:0; }
   #navmenu ul li a{ color:var(--link-color); text-decoration:none; padding:8px 6px; display:block; font-family: 'Poppins', sans-serif; font-size:16px; white-space:nowrap; }
   #navmenu ul li a.active{ font-weight:600; color:#e6f7ff; }
   /* Right logout button (pill) */
   .btn-getstarted{ flex:0 0 auto; margin-left:16px; background:var(--btn-bg); color:#063042; padding:8px 16px; border-radius:28px; text-decoration:none; display:inline-block; font-weight:600; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
-  .mobile-nav-toggle{ display:none; color:var(--link-color); }
+  .mobile-nav-toggle{ display:none; color:var(--link-color); font-size:24px; cursor:pointer; position:absolute; right:140px; top:50%; transform:translateY(-50%); }
   /* Prevent nav items from wrapping; on small screens hide and use mobile toggle */
-  @media (max-width:992px){
-    #navmenu{ flex:1 1 100%; }
+  @media (max-width:1199px){
+    #header > .container-fluid{ justify-content:space-between; flex-wrap:nowrap; }
+    #navmenu{ flex:1 1 auto; order:2; margin-left:0.5rem; }
+    #navmenu ul{ width:auto; }
     /* hide default list, position it for the overlay */
     #navmenu ul{
       display:none;
       position:absolute;
-      /* place just below header (approx. 80px) instead of at bottom of full-screen overlay */
-      top:80px;
+      top:70px;
       left:0;
       right:0;
       background:var(--nav-contrast);
       flex-direction:column;
       padding:12px;
     }
+    .mobile-nav-toggle{ display:block !important; position:relative; right:auto; top:auto; transform:none; order:3; margin-left:4px; }
+    .brand{ flex:0 0 auto; font-size:20px; margin-left:-4px; }
+    .btn-getstarted{ flex:0 0 auto; margin-left:0.4rem; padding:5px 11px; font-size:0.86rem; }
     /* show when mobile nav active on body */
     body.mobile-nav-active #navmenu ul{
       display:flex !important;
       z-index:10001; /* above overlay background */
     }
-    .mobile-nav-toggle{ display:block; margin-left:8px; }
-    .btn-getstarted{ margin-left:0; }
   }
 </style>
 
@@ -81,7 +84,7 @@
               <li><a href="{% url 'venue_admin:venue_edit_start' %}">Edit Venue</a></li>
               <li><a href="{% url 'venue_admin:user_list' %}">Edit Users</a></li>
             </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            <i class="mobile-nav-toggle bi bi-list"></i>
           </nav>
         <!-- Right-aligned logout button -->
         <a class="btn-getstarted ms-auto" id="logoutButton" href="{% url 'venue_admin:logout' %}">Log Out</a>
