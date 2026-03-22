@@ -6,8 +6,13 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
-  "use strict";
+if (window.__arshaMainJsInitialized) {
+  console.debug('Arsha main.js already initialized, skipping duplicate load.');
+} else {
+  window.__arshaMainJsInitialized = true;
+
+  (function() {
+    "use strict";
 
   /**
    * Apply .scrolled class to the body as the page is scrolled down
@@ -230,3 +235,4 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+}

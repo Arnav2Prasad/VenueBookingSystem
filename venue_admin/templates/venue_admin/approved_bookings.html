@@ -15,6 +15,10 @@
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- Vendor CSS Files -->
+<link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+
 <style>
 /* ===== YOUR ENTIRE CSS (UNCHANGED) ===== */
 :root {
@@ -182,15 +186,21 @@ tbody tr:hover{
 <td>
 <button class="btn view-details-btn"
 onclick="showBookingDetails(
-'{{ request.request_id }}',
-'{{ request.user.name }}',
-'{{ request.user.email }}',
-'{{ request.phone_number }}',
-'{{ request.venue.venue_name }}',
-'{{ request.date }}',
-'{{ request.time }}',
-'{{ request.duration }}',
-'{{ request.event_details }}'
+'{{ request.request_id|escapejs }}',
+'{{ request.user.name|escapejs }}',
+'{{ request.user.email|escapejs }}',
+'{{ request.phone_number|escapejs }}',
+'{{ request.venue.venue_name|escapejs }}',
+'{{ request.date|escapejs }}',
+'{{ request.time|escapejs }}',
+'{{ request.duration|escapejs }}',
+'{{ request.event_details|escapejs }}',
+'{{ request.organization_name|default_if_none:''|escapejs }}',
+'{{ request.event_type|default_if_none:''|escapejs }}',
+'{{ request.guest_count|default_if_none:''|escapejs }}',
+'{{ request.purpose|default_if_none:''|escapejs }}',
+'{{ request.special_requirements|default_if_none:''|escapejs }}',
+'{{ request.additional_info|default_if_none:''|escapejs }}'
 )">View</button>
 
 <button class="btn cancel-btn"
@@ -237,17 +247,24 @@ return document.cookie.split('; ')
 ?.split('=')[1];
 }
 
-function showBookingDetails(id,name,email,phone,venue,date,time,duration,event){
+function showBookingDetails(id,name,email,phone,venue,date,time,duration,event,organization,eventType,guestCount,purpose,specialRequirements,additionalInfo){
 currentRequestId=id;
 
 document.getElementById('bookingDetails').innerHTML=`
-<p><b>Name:</b> ${name}</p>
-<p><b>Email:</b> ${email}</p>
-<p><b>Venue:</b> ${venue}</p>
-<p><b>Date:</b> ${date}</p>
-<p><b>Time:</b> ${formatTime(time)}</p>
-<p><b>Duration:</b> ${duration}</p>
-<p><b>Event:</b> ${event}</p>
+<div class="detail-group"><p><b>Requester Name:</b> ${name}</p></div>
+<div class="detail-group"><p><b>Email:</b> ${email}</p></div>
+<div class="detail-group"><p><b>Phone:</b> ${phone || 'N/A'}</p></div>
+<div class="detail-group"><p><b>Organization:</b> ${organization || 'N/A'}</p></div>
+<div class="detail-group"><p><b>Event Type:</b> ${eventType || 'N/A'}</p></div>
+<div class="detail-group"><p><b>Guest Count:</b> ${guestCount || 'N/A'}</p></div>
+<div class="detail-group"><p><b>Purpose:</b> ${purpose || 'N/A'}</p></div>
+<div class="detail-group"><p><b>Special Requirements:</b> ${specialRequirements || 'N/A'}</p></div>
+<div class="detail-group"><p><b>Additional Info:</b> ${additionalInfo || 'N/A'}</p></div>
+<div class="detail-group"><p><b>Venue:</b> ${venue}</p></div>
+<div class="detail-group"><p><b>Date:</b> ${date}</p></div>
+<div class="detail-group"><p><b>Time:</b> ${formatTime(time)}</p></div>
+<div class="detail-group"><p><b>Duration:</b> ${duration}</p></div>
+<div class="detail-group"><p><b>Event Details:</b> ${event}</p></div>
 `;
 
 openDialog('bookingDialog');
@@ -302,5 +319,7 @@ c.textContent=formatTime(c.dataset.time);
 });
 </script>
 
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
 </body>
 </html>
